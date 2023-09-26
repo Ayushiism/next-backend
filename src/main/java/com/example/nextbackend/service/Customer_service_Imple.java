@@ -4,6 +4,7 @@ import com.example.customerdetails.exception.ResourceNotFoundException;
 
 
 import com.example.nextbackend.model.Customer_details;
+import com.example.nextbackend.model.Family;
 import com.example.nextbackend.repository.Customer_repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -32,7 +33,10 @@ public class Customer_service_Imple implements com.example.customerdetails.servi
     }
 
     @Override
-    public Customer_details createCustomer(Customer_details user) {
+    public Customer_details createCustomer(Customer_details user)
+    {
+//        Family fam = new Family();
+//        fam.setUsername(user.get);
         return customer_repository.save(user);
     }
 

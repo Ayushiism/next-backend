@@ -14,7 +14,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "User_Details")
+@Table(name = "Customer_details")
 public class Customer_details {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,6 +26,7 @@ public class Customer_details {
 
     @Column(name = "last_name")
     private String last_name;
+
 
     @JsonFormat(pattern="dd-MM-yyyy" , shape = JsonFormat.Shape.STRING)
     @Column(name = "dob")
@@ -41,7 +42,10 @@ public class Customer_details {
     private String id_number;
 
     // foreign key
-    @Column(name = "family_id")
-    private long family_id;
+
+    @ManyToOne(cascade= CascadeType.ALL)
+    @JoinColumn(name = "family_id")
+    private Family family;
+
 
 }

@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Set;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -16,14 +18,18 @@ public class Family {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "family_id")
-    private long customer_id;
+    private long family_id;
 
-    @Column(name = "user_name")
-    private String first_name;
+    @Column(name = "user_name", unique = true)
+    private String username;
 
     @Column(name = "password")
-    private String last_name;
+    private String password;
 
     @Column(name = "plan")
     private  String plan;
+
+    @OneToMany(fetch = FetchType.EAGER,mappedBy="family",cascade = CascadeType.ALL)
+//    @JoinColumn(name = "family_id", referencedColumnName = "user_id")
+    private Set<Customer_details> customerDetailsSet;
 }
