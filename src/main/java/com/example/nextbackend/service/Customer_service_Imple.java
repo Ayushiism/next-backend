@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class Customer_service_Imple implements com.example.customerdetails.service.Customer_service {
+public class Customer_service_Imple implements com.example.nextbackend.service.Customer_service {
 
     @Autowired
     private Customer_repository customer_repository;

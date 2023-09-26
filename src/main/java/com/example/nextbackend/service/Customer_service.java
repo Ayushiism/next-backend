@@ -1,4 +1,4 @@
-package com.example.customerdetails.service;
+package com.example.nextbackend.service;
 
 
 

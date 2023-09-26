@@ -3,7 +3,9 @@ package com.example.nextbackend.controller;
 
 
 import com.example.nextbackend.model.Customer_details;
+import com.example.nextbackend.model.Family;
 import com.example.nextbackend.service.Customer_service_Imple;
+import com.example.nextbackend.service.Family_service_Imple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,8 @@ import java.util.List;
 public class CustomerController {
     @Autowired
     private Customer_service_Imple customer_service_imple;
+    @Autowired
+    private Family_service_Imple familyServiceImple;
 
     @GetMapping("/getAllCustomers")
     public List<Customer_details> getAllUsers(){
@@ -35,6 +39,13 @@ public class CustomerController {
 
         return customer_service_imple.createCustomer(customer_details);
     }
+    @PostMapping("/putFamily")
+    public Family createFamily(@RequestBody Family family) {
+//        customer_details.setDob(new SimpleDateFormat("yyyy/MM/dd").parse(String.valueOf(customer_details.getDob())));
+
+        return familyServiceImple.createFamily(family);
+    }
+
 
     @GetMapping("/getByID/{id}")
     public ResponseEntity<Object> getUserByID(@PathVariable long id){

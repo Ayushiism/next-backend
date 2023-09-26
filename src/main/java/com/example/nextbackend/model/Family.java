@@ -1,13 +1,13 @@
 package com.example.nextbackend.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
+import java.util.List;
 import java.util.Set;
 
+@ToString
+@Data
 @Getter
 @Setter
 @NoArgsConstructor
@@ -29,7 +29,5 @@ public class Family {
     @Column(name = "plan")
     private  String plan;
 
-    @OneToMany(fetch = FetchType.EAGER,mappedBy="family",cascade = CascadeType.ALL)
-//    @JoinColumn(name = "family_id", referencedColumnName = "user_id")
-    private Set<Customer_details> customerDetailsSet;
+
 }

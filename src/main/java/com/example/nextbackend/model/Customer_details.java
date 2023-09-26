@@ -2,13 +2,12 @@ package com.example.nextbackend.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
 
+@ToString
+@Data
 @Getter
 @Setter
 @NoArgsConstructor
@@ -18,8 +17,8 @@ import java.util.Date;
 public class Customer_details {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "User_id")
-    private long User_id;
+    @Column(name = "user_id")
+    private long user_id;
 
     @Column(name = "first_name")
     private String first_name;
@@ -42,10 +41,8 @@ public class Customer_details {
     private String id_number;
 
     // foreign key
-
     @ManyToOne(cascade= CascadeType.ALL)
-    @JoinColumn(name = "family_id")
+    @JoinColumn(name = "family id")
     private Family family;
-
 
 }
