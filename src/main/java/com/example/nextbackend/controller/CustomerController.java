@@ -2,6 +2,7 @@ package com.example.nextbackend.controller;
 
 
 
+import com.example.nextbackend.dto.FamilyResponse;
 import com.example.nextbackend.model.Customer_details;
 import com.example.nextbackend.model.Family;
 import com.example.nextbackend.service.Customer_service_Imple;
@@ -50,10 +51,18 @@ public class CustomerController {
     }
 
     @GetMapping("/getFamilyByUserName/{username}")
-    public Family getFamilyByUserName(@PathVariable String username) {
+    public FamilyResponse getFamilyByUserName(@PathVariable String username) {
 //        customer_details.setDob(new SimpleDateFormat("yyyy/MM/dd").parse(String.valueOf(customer_details.getDob())));
-
-        return familyServiceImple.getByusername(username);
+         FamilyResponse familyResponse = new FamilyResponse();
+         Family family = familyServiceImple.getByusername(username);
+         if (family!=null){
+             familyResponse.familyEntity = family;
+             familyResponse.error = false;
+         }else{
+             familyResponse.familyEntity = null;
+             familyResponse.error = true;
+         }
+         return familyResponse;
     }
 
 
@@ -86,6 +95,11 @@ public class CustomerController {
     @PutMapping("/updateByID/{id}")
     public ResponseEntity<Object> updateUserByID(@PathVariable long id , @RequestBody Customer_details customer){
         return ResponseEntity.ok(customer_service_imple.updateCustomerByID(id , customer));
+    }
+
+    @PutMapping("/updatePlanByID/{id}/{plan}")
+    public ResponseEntity<Object> updatePlanByID(@PathVariable long id , @PathVariable String plan){
+        return ResponseEntity.ok(familyServiceImple.updateCustomerByID(id , plan));
     }
 
 

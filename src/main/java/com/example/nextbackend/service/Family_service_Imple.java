@@ -1,5 +1,6 @@
 package com.example.nextbackend.service;
 
+import com.example.nextbackend.exception.ResourceNotFoundException;
 import com.example.nextbackend.model.Customer_details;
 import com.example.nextbackend.model.Family;
 import com.example.nextbackend.repository.Customer_repository;
@@ -28,6 +29,10 @@ public class Family_service_Imple implements Family_service{
 
     @Override
     public Family updateCustomerByID(long id, String plan) {
-        return null;
+        Family familyUpdate = family_repository.findById(id).orElseThrow(()->
+                new ResourceNotFoundException("User not Exit with id"+id));
+                familyUpdate.setPlan(plan);
+                family_repository.save(familyUpdate);
+        return familyUpdate;
     }
 }
