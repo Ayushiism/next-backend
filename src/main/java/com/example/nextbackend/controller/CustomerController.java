@@ -85,6 +85,28 @@ public class CustomerController {
         return map;
     }
 
+    @PostMapping("/addFamilyMember")
+    public Map<String, Object> putFamilyMember(@RequestBody Map<String, String> json){
+
+        Map<String, Object> map = new HashMap<String,Object>();
+        Family fam =  familyServiceImple.getByusername(json.get("username"));
+
+        if(fam == null) map.put("error","UserName doesn't exist!!");
+        else{
+            Customer_details customer = new Customer_details();
+            customer.setFamily(fam);
+            customer.setDob(json.get("dob"));
+            customer.setGender(json.get("gender"));
+            customer.setId_type(json.get("id_type"));
+            customer.setId_number(json.get("id_number"));
+            customer.setFirst_name(json.get("first_name"));
+            customer.setLast_name(json.get("last_name"));
+
+            map.put("data" ,customer_service_imple.createCustomer(customer));
+            map.put("message", "User added Successfully!!");
+        }
+        return map;
+    }
 
 
     @GetMapping("/getByID/{id}")
