@@ -13,4 +13,5 @@ public interface Customer_service {
     Customer_details getCustomerByID(long id);
     Customer_details updateCustomerByID(long id , Customer_details user);
     Customer_details deleteCustomerByID( long id);
+    List<Customer_details> findCustomersByFamilyId(long family_id);
 }

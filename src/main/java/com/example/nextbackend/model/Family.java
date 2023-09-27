@@ -17,10 +17,10 @@ import java.util.Set;
 public class Family {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "family_id")
+    @Column(name = "familyid")
     private long family_id;
 
-    @Column(name = "user_name", unique = true)
+    @Column(name = "username", unique = true)
     private String username;
 
     @Column(name = "password")

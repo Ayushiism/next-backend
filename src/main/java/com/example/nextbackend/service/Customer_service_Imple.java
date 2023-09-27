@@ -1,6 +1,6 @@
 package com.example.nextbackend.service;
 
-import com.example.customerdetails.exception.ResourceNotFoundException;
+import com.example.nextbackend.exception.ResourceNotFoundException;
 
 
 import com.example.nextbackend.model.Customer_details;
@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -67,5 +69,16 @@ public class Customer_service_Imple implements com.example.nextbackend.service.C
         customer_repository.delete(customer);
 
         return customer;
+    }
+
+    @Override
+    public List<Customer_details> findCustomersByFamilyId(long family_id){
+
+        try {
+            return new ResponseEntity<List<Customer_details>>(customer_repository.findCustomersByFamilyId(family_id), HttpStatus.OK).getBody();
+        }
+        catch(Exception e){
+            throw new ResourceNotFoundException("Username does not exist");
+        }
     }
 }

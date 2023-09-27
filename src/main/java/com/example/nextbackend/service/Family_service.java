@@ -6,4 +6,5 @@ import com.example.nextbackend.model.Family;
 public interface Family_service {
 
     Family createFamily(Family family);
+    Family getByusername(String username);
 }

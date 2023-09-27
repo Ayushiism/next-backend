@@ -11,7 +11,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin("*")
@@ -45,6 +48,34 @@ public class CustomerController {
 
         return familyServiceImple.createFamily(family);
     }
+
+    @GetMapping("/getFamilyByUserName/{username}")
+    public Family getFamilyByUserName(@PathVariable String username) {
+//        customer_details.setDob(new SimpleDateFormat("yyyy/MM/dd").parse(String.valueOf(customer_details.getDob())));
+
+        return familyServiceImple.getByusername(username);
+    }
+
+
+    @GetMapping("/login")
+    public Map<String, Object> getFamilyByUserName(@RequestBody Map<String, String> json) {
+//        customer_details.setDob(new SimpleDateFormat("yyyy/MM/dd").parse(String.valueOf(customer_details.getDob())));
+
+       Map<String, Object> map = new HashMap<String,Object>();
+
+
+        Family fam =  familyServiceImple.getByusername(json.get("username"));
+
+        if(json.get("password").equals(fam.getPassword())){
+
+            map.put("data", customer_service_imple.findCustomersByFamilyId(fam.getFamily_id()));
+        }else{
+            map.put("error", "Wrong credentials");
+        }
+
+        return map;
+    }
+
 
 
     @GetMapping("/getByID/{id}")
