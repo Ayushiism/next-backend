@@ -65,12 +65,12 @@ public class CustomerController {
 
 
         Family fam =  familyServiceImple.getByusername(json.get("username"));
-
-        if(json.get("password").equals(fam.getPassword())){
+        if(fam == null) map.put("error","UserName doesn't exist!!");
+        else if(json.get("password").equals(fam.getPassword())){
 
             map.put("data", customer_service_imple.findCustomersByFamilyId(fam.getFamily_id()));
         }else{
-            map.put("error", "Wrong credentials");
+            map.put("error", "Invalid Password!!");
         }
 
         return map;

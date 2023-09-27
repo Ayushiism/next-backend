@@ -7,4 +7,5 @@ public interface Family_service {
 
     Family createFamily(Family family);
     Family getByusername(String username);
+    Family updateCustomerByID(long id , String plan);
 }

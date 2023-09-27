@@ -25,4 +25,9 @@ public class Family_service_Imple implements Family_service{
     public Family getByusername(String username) {
         return new ResponseEntity<Family>(family_repository.findByusername(username) , HttpStatus.OK).getBody();
     }
+
+    @Override
+    public Family updateCustomerByID(long id, String plan) {
+        return null;
+    }
 }
