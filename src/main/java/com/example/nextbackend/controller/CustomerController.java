@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,6 +42,9 @@ public class CustomerController {
     public Customer_details createUser(@RequestBody Customer_details customer_details) {
 //        customer_details.setDob(new SimpleDateFormat("yyyy/MM/dd").parse(String.valueOf(customer_details.getDob())));
 
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(10);
+        String result = encoder.encode(customer_details.getFamily().getPassword());
+        customer_details.getFamily().setPassword(result);
         return customer_service_imple.createCustomer(customer_details);
     }
     @PostMapping("/putFamily")
@@ -72,11 +76,12 @@ public class CustomerController {
 
        Map<String, Object> map = new HashMap<String,Object>();
 
-
         Family fam =  familyServiceImple.getByusername(json.get("username"));
-        if(fam == null) map.put("error","UserName doesn't exist!!");
-        else if(json.get("password").equals(fam.getPassword())){
 
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(10);
+
+        if(fam == null) map.put("error","UserName doesn't exist!!");
+        else if(encoder.matches(json.get("password"), fam.getPassword())){
             map.put("data", customer_service_imple.findCustomersByFamilyId(fam.getFamily_id()));
         }else{
             map.put("error", "Invalid Password!!");
