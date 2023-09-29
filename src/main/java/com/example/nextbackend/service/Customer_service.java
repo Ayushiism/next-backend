@@ -7,8 +7,7 @@ import com.example.nextbackend.model.Customer_details;
 import java.util.List;
 
 public interface Customer_service {
-    List<Customer_details> getAllCustomers();
-    List<Customer_details> getCustomersByPage(Integer pageNumber , Integer pageSize);
+//
     Customer_details createCustomer( Customer_details user);
     Customer_details getCustomerByID(long id);
     Customer_details updateCustomerByID(long id , Customer_details user);

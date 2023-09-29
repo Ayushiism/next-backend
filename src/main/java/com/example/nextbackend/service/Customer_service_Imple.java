@@ -22,17 +22,8 @@ public class Customer_service_Imple implements com.example.nextbackend.service.C
     @Autowired
     private Customer_repository customer_repository;
 
-    @Override
-    public List<Customer_details> getAllCustomers() {
-        return customer_repository.findAll();
-    }
 
-    @Override
-    public List<Customer_details> getCustomersByPage(Integer pageNumber, Integer pageSize) {
-        Pageable pageable = PageRequest.of(pageNumber , pageSize);
-        Page<Customer_details> page = customer_repository.findAll(pageable);
-        return page.getContent();
-    }
+
 
     @Override
     public Customer_details createCustomer(Customer_details user)

@@ -1,7 +1,4 @@
 package com.example.nextbackend.controller;
-
-
-
 import com.example.nextbackend.dto.FamilyResponse;
 import com.example.nextbackend.model.Customer_details;
 import com.example.nextbackend.model.Family;
@@ -27,16 +24,8 @@ public class CustomerController {
     @Autowired
     private Family_service_Imple familyServiceImple;
 
-    @GetMapping("/getAllCustomers")
-    public List<Customer_details> getAllUsers(){
-        return customer_service_imple.getAllCustomers();
-    }
 
-    @GetMapping("/getCustomersByPage")
-    public List<Customer_details> getCustomerByPage(@RequestParam(value = "pageNumber" , defaultValue = "0" , required = false) Integer pageNumber,
-                                                    @RequestParam(value = "pageSize" , defaultValue = "5" , required = false) Integer pageSize){
-        return customer_service_imple.getCustomersByPage(pageNumber , pageSize);
-    }
+
 
     @PostMapping("/putCustomer")
     public Customer_details createUser(@RequestBody Customer_details customer_details) {
