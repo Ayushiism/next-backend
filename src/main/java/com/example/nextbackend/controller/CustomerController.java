@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@CrossOrigin("*")
+@CrossOrigin("http://localhost:3000/")
 @RequestMapping("api/customer")
 public class CustomerController {
     @Autowired
@@ -36,24 +36,22 @@ public class CustomerController {
         customer_details.getFamily().setPassword(result);
         return customer_service_imple.createCustomer(customer_details);
     }
-    @PostMapping("/putFamily")
-    public Family createFamily(@RequestBody Family family) {
-//        customer_details.setDob(new SimpleDateFormat("yyyy/MM/dd").parse(String.valueOf(customer_details.getDob())));
+//    @PostMapping("/putFamily")
+//    public Family createFamily(@RequestBody Family family) {
+////        customer_details.setDob(new SimpleDateFormat("yyyy/MM/dd").parse(String.valueOf(customer_details.getDob())));
+//
+//        return familyServiceImple.createFamily(family);
+//    }
 
-        return familyServiceImple.createFamily(family);
-    }
-
-    @GetMapping("/getFamilyByUserName/{username}")
-    public FamilyResponse getFamilyByUserName(@PathVariable String username) {
+    @GetMapping("/checkUsername/{username}")
+    public FamilyResponse CheckUsernamw(@PathVariable String username) {
 //        customer_details.setDob(new SimpleDateFormat("yyyy/MM/dd").parse(String.valueOf(customer_details.getDob())));
          FamilyResponse familyResponse = new FamilyResponse();
          Family family = familyServiceImple.getByusername(username);
          if (family!=null){
-             familyResponse.familyEntity = family;
-             familyResponse.error = false;
+             familyResponse.available = false;
          }else{
-             familyResponse.familyEntity = null;
-             familyResponse.error = true;
+             familyResponse.available = true;
          }
          return familyResponse;
     }
