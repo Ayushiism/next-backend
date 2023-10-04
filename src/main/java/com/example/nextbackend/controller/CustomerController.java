@@ -3,16 +3,19 @@ import com.example.nextbackend.dto.FamilyResponse;
 import com.example.nextbackend.model.Customer_details;
 import com.example.nextbackend.model.Family;
 import com.example.nextbackend.model.FamilyMember;
+import com.example.nextbackend.model.IncludeItems;
+import com.example.nextbackend.model.Packages;
 import com.example.nextbackend.service.Customer_service_Imple;
 import com.example.nextbackend.service.Family_Member_service;
 import com.example.nextbackend.service.Family_service_Imple;
+import com.example.nextbackend.service.IncludeItems_sevice_Imple;
+import com.example.nextbackend.service.Packages_service_Imple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +30,30 @@ public class CustomerController {
     private Family_service_Imple familyServiceImple;
     @Autowired
     private Family_Member_service familyMemberServiceImple;
+    private Packages_service_Imple packages_service_imple;
+    @Autowired
+    private IncludeItems_sevice_Imple includeItems_sevice_imple;
 
+
+    @PostMapping("/putPlans")
+    public Packages addPlans(@RequestBody Packages plans){
+        return packages_service_imple.putPlans(plans);
+    }
+
+    @GetMapping("/allPlans")
+    public List<Packages>getallPans(){
+        return packages_service_imple.allPlans();
+    }
+
+    @GetMapping("/getPlanById/{id}")
+    public ResponseEntity<Packages> getPlanById(@PathVariable long id){
+        return ResponseEntity.ok(packages_service_imple.plansById(id));
+    }
+
+    @PostMapping("/putDetails")
+    public IncludeItems putDetails(long id, String info){
+        return includeItems_sevice_imple.putDetails(id,info);
+    }
 
     @PostMapping("/putCustomer")
     public Map<String, Object> createUser(@RequestBody Customer_details customer_details) {
