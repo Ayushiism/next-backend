@@ -29,5 +29,7 @@ public class Family {
     @Column(name = "plan")
     private  String plan;
 
-
+    @OneToMany(cascade= CascadeType.ALL)
+    @JoinColumn(name = "family_members")
+    private Family family;
 }

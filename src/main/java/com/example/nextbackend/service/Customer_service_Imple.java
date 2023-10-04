@@ -23,8 +23,6 @@ public class Customer_service_Imple implements com.example.nextbackend.service.C
     private Customer_repository customer_repository;
 
 
-
-
     @Override
     public Customer_details createCustomer(Customer_details user)
     {

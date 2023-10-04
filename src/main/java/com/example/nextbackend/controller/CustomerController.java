@@ -2,7 +2,9 @@ package com.example.nextbackend.controller;
 import com.example.nextbackend.dto.FamilyResponse;
 import com.example.nextbackend.model.Customer_details;
 import com.example.nextbackend.model.Family;
+import com.example.nextbackend.model.FamilyMember;
 import com.example.nextbackend.service.Customer_service_Imple;
+import com.example.nextbackend.service.Family_Member_service;
 import com.example.nextbackend.service.Family_service_Imple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,19 +25,31 @@ public class CustomerController {
     private Customer_service_Imple customer_service_imple;
     @Autowired
     private Family_service_Imple familyServiceImple;
-
-
+    @Autowired
+    private Family_Member_service familyMemberServiceImple;
 
 
     @PostMapping("/putCustomer")
-    public Customer_details createUser(@RequestBody Customer_details customer_details) {
+    public Map<String, Object> createUser(@RequestBody Customer_details customer_details) {
 //        customer_details.setDob(new SimpleDateFormat("yyyy/MM/dd").parse(String.valueOf(customer_details.getDob())));
+
+        Map<String, Object> response = new HashMap<String, Object>();
+
+        Family family = familyServiceImple.getByusername(customer_details.getFamily().getUsername());
+        if (family!=null){
+            response.put("error", false);
+        }else{
+            response.put("error", true);
+            response.put("msg", "username already exists");
+        }
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(10);
         String result = encoder.encode(customer_details.getFamily().getPassword());
         customer_details.getFamily().setPassword(result);
-        return customer_service_imple.createCustomer(customer_details);
+        response.put("userDetail", customer_service_imple.createCustomer(customer_details));
+        return response;
     }
+
 //    @PostMapping("/putFamily")
 //    public Family createFamily(@RequestBody Family family) {
 ////        customer_details.setDob(new SimpleDateFormat("yyyy/MM/dd").parse(String.valueOf(customer_details.getDob())));
@@ -43,18 +57,18 @@ public class CustomerController {
 //        return familyServiceImple.createFamily(family);
 //    }
 
-    @GetMapping("/checkUsername/{username}")
-    public FamilyResponse CheckUsernamw(@PathVariable String username) {
-//        customer_details.setDob(new SimpleDateFormat("yyyy/MM/dd").parse(String.valueOf(customer_details.getDob())));
-         FamilyResponse familyResponse = new FamilyResponse();
-         Family family = familyServiceImple.getByusername(username);
-         if (family!=null){
-             familyResponse.available = false;
-         }else{
-             familyResponse.available = true;
-         }
-         return familyResponse;
-    }
+//    @GetMapping("/checkUsername/{username}")
+//    public FamilyResponse CheckUsernamw(@PathVariable String username) {
+////        customer_details.setDob(new SimpleDateFormat("yyyy/MM/dd").parse(String.valueOf(customer_details.getDob())));
+//         FamilyResponse familyResponse = new FamilyResponse();
+//         Family family = familyServiceImple.getByusername(username);
+//         if (family!=null){
+//             familyResponse.available = false;
+//         }else{
+//             familyResponse.available = true;
+//         }
+//         return familyResponse;
+//    }
 
 
     @GetMapping("/login")
@@ -77,24 +91,45 @@ public class CustomerController {
         return map;
     }
 
-    @PostMapping("/addFamilyMember")
-    public Map<String, Object> putFamilyMember(@RequestBody Map<String, String> json){
+//    @PostMapping("/addFamilyMember")
+//    public Map<String, Object> putFamilyMember(@RequestBody Map<String, String> json){
+//
+//        Map<String, Object> map = new HashMap<String,Object>();
+//        Family fam =  familyServiceImple.getByusername(json.get("username"));
+//
+//        if(fam == null) map.put("error","UserName doesn't exist!!");
+//        else{
+//            Customer_details customer = new Customer_details();
+//            customer.setFamily(fam);
+//            customer.setDob(json.get("dob"));
+//            customer.setGender(json.get("gender"));
+//            customer.setId_type(json.get("id_type"));
+//            customer.setId_number(json.get("id_number"));
+//            customer.setFirst_name(json.get("first_name"));
+//            customer.setLast_name(json.get("last_name"));
+//
+//            map.put("data" ,customer_service_imple.createCustomer(customer));
+//            map.put("message", "User added Successfully!!");
+//        }
+//        return map;
+//    }
 
+    @PostMapping("/addFamilyMember")
+    public Map<String, Object> putFamilyMember(@RequestBody Map<String, String> json) {
         Map<String, Object> map = new HashMap<String,Object>();
         Family fam =  familyServiceImple.getByusername(json.get("username"));
 
         if(fam == null) map.put("error","UserName doesn't exist!!");
         else{
-            Customer_details customer = new Customer_details();
-            customer.setFamily(fam);
-            customer.setDob(json.get("dob"));
-            customer.setGender(json.get("gender"));
-            customer.setId_type(json.get("id_type"));
-            customer.setId_number(json.get("id_number"));
-            customer.setFirst_name(json.get("first_name"));
-            customer.setLast_name(json.get("last_name"));
+            FamilyMember fm = new FamilyMember();
 
-            map.put("data" ,customer_service_imple.createCustomer(customer));
+            fm.setFamily(fam);
+            fm.setDob(json.get("dob"));
+            fm.setGender(json.get("gender"));
+            fm.setFirst_name(json.get("first_name"));
+            fm.setLast_name(json.get("last_name"));
+
+            map.put("data" ,familyMemberServiceImple.createFamilyMember(fm));
             map.put("message", "User added Successfully!!");
         }
         return map;

@@ -41,8 +41,8 @@ public class Customer_details {
     private String id_number;
 
     // foreign key
-    @ManyToOne(cascade= CascadeType.ALL)
-    @JoinColumn(name = "family id")
+    @OneToOne(cascade= CascadeType.ALL)
+    @JoinColumn(name = "family_id")
     private Family family;
 
 }
