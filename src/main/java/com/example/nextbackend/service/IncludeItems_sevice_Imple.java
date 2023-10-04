@@ -15,12 +15,5 @@ public class IncludeItems_sevice_Imple implements com.example.nextbackend.servic
     private IncludeItems_repository includeItemsRepository;
     @Autowired
     private Packages_service_Imple packages_service_imple;
-    @Override
-    public IncludeItems putDetails(long pid, String details) {
-        Packages packages = packages_service_imple.plansById(pid);
-        IncludeItems item = new IncludeItems();
-        item.setInfo(details);
-        item.setPackages(packages);
-        return includeItemsRepository.save(item);
-    }
+
 }

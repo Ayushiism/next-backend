@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface Family_members_repository extends JpaRepository<FamilyMember, Long>{
 
-    @Query("SELECT u FROM FamilyMember u WHERE u.family.family_id=?1")
-    List<Customer_details> findFamilyMembersByFamilyId(long family_id);
+//    @Query("SELECT u FROM FamilyMember u WHERE u.family.family_id=?1")
+//    List<Customer_details> findFamilyMembersByFamilyId(long family_id);
 }

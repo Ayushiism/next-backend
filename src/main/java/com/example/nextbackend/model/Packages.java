@@ -5,6 +5,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @ToString
 @Data
 @Getter
@@ -25,4 +28,6 @@ public class Packages {
     @Column(name = "price")
     private long price;
 
+    @OneToMany(cascade= CascadeType.ALL)
+    private Set<IncludeItems> includeItems = new HashSet<>();
 }

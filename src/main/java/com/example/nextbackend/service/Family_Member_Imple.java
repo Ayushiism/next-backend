@@ -5,7 +5,9 @@ import com.example.nextbackend.model.Customer_details;
 import com.example.nextbackend.model.FamilyMember;
 import com.example.nextbackend.repository.Family_members_repository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class Family_Member_Imple implements Family_Member_service{
 
     @Autowired

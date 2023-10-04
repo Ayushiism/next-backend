@@ -9,4 +9,6 @@ public interface Packages_service {
     Packages plansById(long id);
 
     Packages putPlans(Packages plans);
+
+    Packages putDetails(long pid, String details);
 }

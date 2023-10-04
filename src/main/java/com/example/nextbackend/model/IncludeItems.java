@@ -23,8 +23,8 @@ public class IncludeItems {
 
 
     // foreign key
-    @ManyToOne(cascade= CascadeType.ALL)
-    @JoinColumn(name = "pid", referencedColumnName = "id" )
-    private Packages packages;
+//    @ManyToOne(cascade= CascadeType.ALL)
+//    @JoinColumn(name = "pid", referencedColumnName = "id" )
+//    private Packages packages;
 
 }

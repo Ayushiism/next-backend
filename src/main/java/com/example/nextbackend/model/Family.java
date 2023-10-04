@@ -3,6 +3,7 @@ package com.example.nextbackend.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -26,10 +27,14 @@ public class Family {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "plan")
-    private  String plan;
+//    @Column(name = "plan")
+//    private  String plan;
+
+    @OneToOne(cascade= CascadeType.ALL)
+    @JoinColumn(name = "id")
+    private Packages packages;
+
 
     @OneToMany(cascade= CascadeType.ALL)
-    @JoinColumn(name = "family_members")
-    private Family family;
+    private Set<FamilyMember> family_members = new HashSet<>();
 }

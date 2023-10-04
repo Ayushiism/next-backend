@@ -2,6 +2,7 @@ package com.example.nextbackend.service;
 
 import com.example.nextbackend.exception.ResourceNotFoundException;
 import com.example.nextbackend.model.Customer_details;
+import com.example.nextbackend.model.IncludeItems;
 import com.example.nextbackend.model.Packages;
 import com.example.nextbackend.repository.Packages_repository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,5 +30,15 @@ public class Packages_service_Imple implements com.example.nextbackend.service.P
     @Override
     public Packages putPlans(Packages plans) {
         return packagesRepository.save(plans);
+    }
+
+    @Override
+    public  Packages putDetails(long pid, String details) {
+        Packages packages = plansById(pid);
+        IncludeItems item = new IncludeItems();
+        item.setInfo(details);
+//        item.setPackages(packages);
+        packages.getIncludeItems().add(item);
+        return packagesRepository.save(packages);
     }
 }

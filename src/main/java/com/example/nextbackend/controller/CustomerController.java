@@ -30,6 +30,7 @@ public class CustomerController {
     private Family_service_Imple familyServiceImple;
     @Autowired
     private Family_Member_service familyMemberServiceImple;
+    @Autowired
     private Packages_service_Imple packages_service_imple;
     @Autowired
     private IncludeItems_sevice_Imple includeItems_sevice_imple;
@@ -45,14 +46,15 @@ public class CustomerController {
         return packages_service_imple.allPlans();
     }
 
-    @GetMapping("/getPlanById/{id}")
+    @GetMapping("/PlanById/{id}")
     public ResponseEntity<Packages> getPlanById(@PathVariable long id){
         return ResponseEntity.ok(packages_service_imple.plansById(id));
     }
 
     @PostMapping("/putDetails")
-    public IncludeItems putDetails(long id, String info){
-        return includeItems_sevice_imple.putDetails(id,info);
+    public ResponseEntity<Packages> putDetails(@RequestBody Map<String, String> json){
+
+        return ResponseEntity.ok(packages_service_imple.putDetails(Long.parseLong(json.get("id")),json.get("info")));
     }
 
     @PostMapping("/putCustomer")
@@ -62,11 +64,12 @@ public class CustomerController {
         Map<String, Object> response = new HashMap<String, Object>();
 
         Family family = familyServiceImple.getByusername(customer_details.getFamily().getUsername());
-        if (family!=null){
+        if (family==null){
             response.put("error", false);
         }else{
             response.put("error", true);
             response.put("msg", "username already exists");
+            return response;
         }
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(10);
@@ -149,13 +152,11 @@ public class CustomerController {
         else{
             FamilyMember fm = new FamilyMember();
 
-            fm.setFamily(fam);
             fm.setDob(json.get("dob"));
             fm.setGender(json.get("gender"));
             fm.setFirst_name(json.get("first_name"));
             fm.setLast_name(json.get("last_name"));
-
-            map.put("data" ,familyMemberServiceImple.createFamilyMember(fm));
+            map.put("data" ,familyServiceImple.addFamilyMemberToFamily(fm, json.get("username")));
             map.put("message", "User added Successfully!!");
         }
         return map;
@@ -172,14 +173,18 @@ public class CustomerController {
         return ResponseEntity.ok(customer_service_imple.updateCustomerByID(id , customer));
     }
 
-    @PutMapping("/updatePlanByID/{id}/{plan}")
-    public ResponseEntity<Object> updatePlanByID(@PathVariable long id , @PathVariable String plan){
-        return ResponseEntity.ok(familyServiceImple.updateCustomerByID(id , plan));
+    @PutMapping("/updatePlanByID/{id}/{pid}")
+    public ResponseEntity<Object> updatePlanByID(@PathVariable long id , @PathVariable long pid){
+        return ResponseEntity.ok(familyServiceImple.updateCustomerByID(id , pid));
     }
-
 
     @DeleteMapping("/deleteByID/{id}")
     public ResponseEntity<Customer_details> deleteUserByID(@PathVariable long id){
         return new ResponseEntity<>(customer_service_imple.deleteCustomerByID(id) , HttpStatus.NO_CONTENT);
+    }
+
+    @DeleteMapping("/deleteFamilyMemberByID/{id}")
+    public ResponseEntity<FamilyMember> deleteFamilyMemberByID(@PathVariable long id){
+        return new ResponseEntity<>(familyMemberServiceImple.deleteFamilyMember(id) , HttpStatus.NO_CONTENT);
     }
 }

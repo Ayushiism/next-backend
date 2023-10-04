@@ -32,8 +32,7 @@ public class FamilyMember {
     @Column(name = "gender")
     private String gender;
 
-    @ManyToOne(cascade= CascadeType.ALL)
-    @JoinColumn(name = "family_id")
-    private Family family;
-
+//    @ManyToOne(cascade= CascadeType.ALL)
+//    @JoinColumn(name = "family_id")
+//    private Family family;
 }
