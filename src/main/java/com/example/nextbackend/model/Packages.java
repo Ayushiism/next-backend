@@ -28,6 +28,9 @@ public class Packages {
     @Column(name = "price")
     private long price;
 
+    @Column(name = "description")
+    private String description;
+
     @OneToMany(cascade= CascadeType.ALL)
     private Set<IncludeItems> includeItems = new HashSet<>();
 }
