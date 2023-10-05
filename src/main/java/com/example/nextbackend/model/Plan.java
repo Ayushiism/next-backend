@@ -1,7 +1,5 @@
 package com.example.nextbackend.model;
 
-import com.example.nextbackend.service.Packages_service;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -15,8 +13,8 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "Packages")
-public class Packages {
+@Table(name = "Plan")
+public class Plan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -34,3 +32,4 @@ public class Packages {
     @OneToMany(cascade= CascadeType.ALL)
     private Set<IncludeItems> includeItems = new HashSet<>();
 }
+

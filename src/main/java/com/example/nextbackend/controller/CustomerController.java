@@ -1,15 +1,13 @@
 package com.example.nextbackend.controller;
-import com.example.nextbackend.dto.FamilyResponse;
 import com.example.nextbackend.model.Customer_details;
 import com.example.nextbackend.model.Family;
 import com.example.nextbackend.model.FamilyMember;
-import com.example.nextbackend.model.IncludeItems;
-import com.example.nextbackend.model.Packages;
+import com.example.nextbackend.model.Plan;
 import com.example.nextbackend.service.Customer_service_Imple;
 import com.example.nextbackend.service.Family_Member_service;
 import com.example.nextbackend.service.Family_service_Imple;
 import com.example.nextbackend.service.IncludeItems_sevice_Imple;
-import com.example.nextbackend.service.Packages_service_Imple;
+import com.example.nextbackend.service.Plan_service_Imple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,30 +29,30 @@ public class CustomerController {
     @Autowired
     private Family_Member_service familyMemberServiceImple;
     @Autowired
-    private Packages_service_Imple packages_service_imple;
+    private Plan_service_Imple plan_service_imple;
     @Autowired
     private IncludeItems_sevice_Imple includeItems_sevice_imple;
 
 
     @PostMapping("/putPlans")
-    public Packages addPlans(@RequestBody Packages plans){
-        return packages_service_imple.putPlans(plans);
+    public Plan addPlans(@RequestBody Plan plans){
+        return plan_service_imple.putPlans(plans);
     }
 
     @GetMapping("/allPlans")
-    public List<Packages>getallPans(){
-        return packages_service_imple.allPlans();
+    public List<Plan> getallPans(){
+        return plan_service_imple.allPlans();
     }
 
     @GetMapping("/PlanById/{id}")
-    public ResponseEntity<Packages> getPlanById(@PathVariable long id){
-        return ResponseEntity.ok(packages_service_imple.plansById(id));
+    public ResponseEntity<Plan> getPlanById(@PathVariable long id){
+        return ResponseEntity.ok(plan_service_imple.plansById(id));
     }
 
     @PostMapping("/putDetails")
-    public ResponseEntity<Packages> putDetails(@RequestBody Map<String, String> json){
+    public ResponseEntity<Plan> putDetails(@RequestBody Map<String, String> json){
 
-        return ResponseEntity.ok(packages_service_imple.putDetails(Long.parseLong(json.get("id")),json.get("info")));
+        return ResponseEntity.ok(plan_service_imple.putDetails(Long.parseLong(json.get("id")),json.get("info")));
     }
 
     @PostMapping("/putCustomer")

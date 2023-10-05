@@ -1,13 +1,10 @@
 package com.example.nextbackend.service;
 
 import com.example.nextbackend.exception.ResourceNotFoundException;
-import com.example.nextbackend.model.Customer_details;
 import com.example.nextbackend.model.Family;
 import com.example.nextbackend.model.FamilyMember;
-import com.example.nextbackend.model.Packages;
-import com.example.nextbackend.repository.Customer_repository;
+import com.example.nextbackend.model.Plan;
 import com.example.nextbackend.repository.Family_repository;
-import com.example.nextbackend.repository.Packages_repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +18,7 @@ public class Family_service_Imple implements Family_service{
     private Family_repository family_repository;
 
     @Autowired
-    private Packages_service_Imple packages_service_imple;
+    private Plan_service_Imple plan_service_Imple;
 
     @Override
     public Family createFamily(Family family) {
@@ -35,10 +32,10 @@ public class Family_service_Imple implements Family_service{
 
     @Override
     public Family updateCustomerByID(long id, long pId) {
-        Packages plan = packages_service_imple.plansById(pId);
+        Plan plan = plan_service_Imple.plansById(pId);
         Family familyUpdate = family_repository.findById(id).orElseThrow(()->
                 new ResourceNotFoundException("User not Exit with id"+id));
-                familyUpdate.setPackages(plan);
+                familyUpdate.setPlan(plan);
                 family_repository.save(familyUpdate);
         return familyUpdate;
     }
