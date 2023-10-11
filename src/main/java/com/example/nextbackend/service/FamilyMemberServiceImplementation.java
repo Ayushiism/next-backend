@@ -1,17 +1,16 @@
 package com.example.nextbackend.service;
 
 import com.example.nextbackend.exception.ResourceNotFoundException;
-import com.example.nextbackend.model.Customer_details;
 import com.example.nextbackend.model.FamilyMember;
-import com.example.nextbackend.repository.Family_members_repository;
+import com.example.nextbackend.repository.FamilyMemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class Family_Member_Imple implements Family_Member_service{
+public class FamilyMemberServiceImplementation implements FamilyMemberService{
 
     @Autowired
-    private Family_members_repository family_member_repository;
+    private FamilyMemberRepository family_member_repository;
 
     @Override
     public FamilyMember createFamilyMember(FamilyMember fm){
@@ -34,3 +33,5 @@ public class Family_Member_Imple implements Family_Member_service{
 
 
 }
+
+

@@ -21,7 +21,6 @@ public class IncludeItems {
     @Column(name = "info")
     private String info;
 
-
     // foreign key
 //    @ManyToOne(cascade= CascadeType.ALL)
 //    @JoinColumn(name = "pid", referencedColumnName = "id" )
